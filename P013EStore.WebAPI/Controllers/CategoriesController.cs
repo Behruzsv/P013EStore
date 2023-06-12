@@ -38,7 +38,7 @@ namespace P013EStore.WebAPI.Controllers
 
         // PUT api/<CategoriesController>/5
         [HttpPut] // [HttpPut("{id}")] orjinali 
-        public async Task<int> Put(int id, [FromBody] Category value)
+        public async Task<int> Put( [FromBody] Category value)
         {
             _service.Update(value);
             return await _service.SaveAsync();
@@ -46,10 +46,16 @@ namespace P013EStore.WebAPI.Controllers
 
         // DELETE api/<CategoriesController>/5
         [HttpDelete]
-        public async Task<int> Delete([FromBody] Category value)
-        {
-            _service.Delete(value);
-            return await _service.SaveAsync();
-        }
-    }
+		public ActionResult Delete(int id)
+		{
+			var kayit = _service.Find(id);
+			if (kayit == null)
+			{
+				return NotFound();
+			}
+			_service.Delete(kayit);
+			_service.Save();
+			return Ok(kayit);
+		}
+	}
 }

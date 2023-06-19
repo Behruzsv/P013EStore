@@ -2,8 +2,6 @@
 using P013EStore.Core.Entities;
 using P013EStore.Service.Abstract;
 
-
-
 namespace P013EStore.WebAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -43,7 +41,7 @@ namespace P013EStore.WebAPI.Controllers
         public async Task<ActionResult> PutAsync([FromBody] Brand value)
         {
             _service.Update(value);
-           int sonuc = await _service.SaveAsync();
+            int sonuc = await _service.SaveAsync();
             if (sonuc > 0)
             {
                 return Ok(value);

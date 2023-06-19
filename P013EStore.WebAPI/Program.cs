@@ -1,4 +1,4 @@
-using P013EStore.Data;
+Ôªøusing P013EStore.Data;
 using P013EStore.Service.Abstract;
 using P013EStore.Service.Concrete;
 using System.Text.Json.Serialization;
@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles); // classalr aras˝ndaki balant˝dan kaynakl˝ olu˛acak iÁ iÁe dˆng¸leri gˆrmezden gel
+builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles); // classlar aras√Ωndaki ba√∞lant√Ωdan kaynakl√Ω olu√æacak i√ß i√ße d√∂ng√ºleri g√∂rmezden gel
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -15,6 +15,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DatabaseContext>();
 builder.Services.AddTransient(typeof(IService<>), typeof(Service<>));
 builder.Services.AddTransient<IProductService, ProductService>();
+builder.Services.AddTransient<ICategoryService, CategoryService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

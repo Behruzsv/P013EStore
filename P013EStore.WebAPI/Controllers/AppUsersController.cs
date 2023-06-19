@@ -46,7 +46,7 @@ namespace P013EStore.WebAPI.Controllers
 
         // DELETE api/<AppUsersController>/5
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id) // geriye bir değer döneceksek void kullanmalıyız
+        public ActionResult Delete(int id) // geriye bir değer döneceksek void kullanmamalıyız
         {
             var kayit = _service.Find(id);
             if (kayit == null)

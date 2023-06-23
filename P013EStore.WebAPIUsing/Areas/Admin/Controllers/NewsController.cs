@@ -4,43 +4,43 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using P013EStore.Core.Entities;
 using P013EStore.WebAPIUsing.Utils;
+using System.Net.Http;
 
 namespace P013EStore.WebAPIUsing.Areas.Admin.Controllers
 {
-	[Area("Admin"), Authorize(Policy = "AdminPolicy")]
-	public class CategoriesController : Controller
-	{
-		private readonly HttpClient _httpClient;
-		private readonly string _apiAdres = "https://localhost:7101/api/Categories";
-		public CategoriesController(HttpClient httpClient)
-		{
-			_httpClient = httpClient;
-		}
+    [Area("Admin"), Authorize(Policy = "AdminPolicy")]
 
-        // GET: CategoriesController
+    public class NewsController : Controller
+    {
+        private readonly HttpClient _httpClient;
+        private readonly string _apiAdres = "https://localhost:7101/api/News";
+        public NewsController(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+        // GET: NewsController
         public async Task<ActionResult> Index()
         {
-            var model = await _httpClient.GetFromJsonAsync<List<Category>>(_apiAdres);
+            var model = await _httpClient.GetFromJsonAsync<List<News>>(_apiAdres);
             return View(model);
         }
 
-        // GET: CategoriesController/Details/5
+        // GET: NewsController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: CategoriesController/Create
-        public async Task<ActionResult> CreateAsync()
+        // GET: NewsController/Create
+        public ActionResult Create()
         {
-            ViewBag.ParentId = new SelectList(await _httpClient.GetFromJsonAsync<List<Category>>(_apiAdres), "Id", "Name");
             return View();
         }
 
-        // POST: CategoriesController/Create
+        // POST: NewsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateAsync(Category collection, IFormFile? Image)
+        public async Task<ActionResult> CreateAsync(News collection, IFormFile? Image)
         {
             try
             {
@@ -58,22 +58,21 @@ namespace P013EStore.WebAPIUsing.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("", "Hata Oluştu!");
             }
-            ViewBag.ParentId = new SelectList(await _httpClient.GetFromJsonAsync<List<Category>>(_apiAdres), "Id", "Name");
+
             return View();
         }
 
-        // GET: CategoriesController/Edit/5
+        // GET: NewsController/Edit/5
         public async Task<ActionResult> EditAsync(int id)
         {
-            ViewBag.ParentId = new SelectList(await _httpClient.GetFromJsonAsync<List<Category>>(_apiAdres), "Id", "Name");
-            var model = await _httpClient.GetFromJsonAsync<Category>(_apiAdres + "/" + id);
+            var model = await _httpClient.GetFromJsonAsync<News>(_apiAdres + "/" + id);
             return View(model);
         }
 
-        // POST: CategoriesController/Edit/5
+        // POST: NewsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync(int id, Category collection, IFormFile? Image, bool? resmiSil)
+        public async Task<ActionResult> EditAsync(int id, News collection, IFormFile? Image, bool? resmiSil)
         {
             try
             {
@@ -96,21 +95,20 @@ namespace P013EStore.WebAPIUsing.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("", "Hata Oluştu!");
             }
-            ViewBag.ParentId = new SelectList(await _httpClient.GetFromJsonAsync<List<Category>>(_apiAdres), "Id", "Name");
             return View();
         }
 
-        // GET: CategoriesController/Delete/5
+        // GET: NewsController/Delete/5
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            var model = await _httpClient.GetFromJsonAsync<Category>(_apiAdres + "/" + id);
+            var model = await _httpClient.GetFromJsonAsync<News>(_apiAdres + "/" + id);
             return View(model);
         }
 
-        // POST: CategoriesController/Delete/5
+        // POST: NewsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteAsync(int id, Category collection)
+        public async Task<ActionResult> DeleteAsync(int id, News collection)
         {
             try
             {
@@ -125,3 +123,4 @@ namespace P013EStore.WebAPIUsing.Areas.Admin.Controllers
         }
     }
 }
+
